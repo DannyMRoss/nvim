@@ -1,0 +1,4 @@
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")
+vim.opt.conceallevel = 0
+vim.diagnostic.enable(false)

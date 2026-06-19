@@ -10,8 +10,30 @@ return {
       local opts = {
         hook = {
           on_filetype = function()
-            vim.api.nvim_buf_set_keymap(0, "n", ",", "<Plug>RDSendLine", {})
-            vim.api.nvim_buf_set_keymap(0, "v", ",", "<Plug>RSendSelection", {})
+            if vim.bo.filetype == "quarto" then
+              -- quarto chunks can be R or python: dispatch `,` based on the
+              -- language of the chunk under the cursor instead of always
+              -- sending to R (which otherwise shadows iron's send-to-python)
+              vim.keymap.set("n", ",", function()
+                if require("r.utils").get_lang() == "python" then
+                  require("iron.core").send_line()
+                  vim.cmd("normal! j")
+                else
+                  require("r.send").line("move")
+                end
+              end, { buffer = true, desc = "Send line to R/Python REPL" })
+
+              vim.keymap.set("v", ",", function()
+                if require("r.utils").get_lang() == "python" then
+                  require("iron.core").visual_send()
+                else
+                  require("r.send").selection(false)
+                end
+              end, { buffer = true, desc = "Send selection to R/Python REPL" })
+            else
+              vim.api.nvim_buf_set_keymap(0, "n", ",", "<Plug>RDSendLine", {})
+              vim.api.nvim_buf_set_keymap(0, "v", ",", "<Plug>RSendSelection", {})
+            end
             vim.api.nvim_buf_set_keymap(0, "i", "<C-`>", "<-", {})
             vim.api.nvim_buf_set_keymap(0, "n", "<localleader>dd", "<Plug>RClearConsole", { desc = "Clear console" })
             vim.api.nvim_buf_set_keymap(

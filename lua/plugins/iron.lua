@@ -22,6 +22,11 @@ return {
               ---format = common.bracketed_paste_python,
               ---block_dividers = { "# %%", "#%%" },
             },
+            quarto = {
+              command = { "ipython", "--no-autoindent" },
+              format = common.bracketed_paste_python,
+              block_dividers = { "# %%", "#%%" },
+            },
           },
           repl_open_cmd = "vertical botright 80 split",
         },
@@ -36,7 +41,6 @@ return {
           send_motion = "<localleader>sc",
           visual_send = "<localleader>sc",
           send_file = "<localleader>sf",
-          send_function = "<localleader>scaf",
           send_line = "<localleader>sl",
           send_paragraph = "<localleader>sp",
           send_until_cursor = "<localleader>su",
@@ -70,6 +74,27 @@ return {
       vim.keymap.set("v", ",", function()
         iron.visual_send()
       end, { desc = "Send selection to REPL" })
+
+      -- send the function around the cursor
+      vim.keymap.set("n", "<localleader>sF", function()
+        vim.o.operatorfunc = "v:lua.require'iron.core'.send_motion"
+        vim.cmd("normal! g@af")
+      end, { desc = "Send function to REPL" })
+
+      -- quarto files can have both R and python chunks: ask which REPL to start
+      vim.keymap.set("n", "<localleader>rs", function()
+        if vim.bo.filetype ~= "quarto" then
+          iron.repl_for(vim.bo.filetype)
+          return
+        end
+        vim.ui.select({ "R", "Python" }, { prompt = "Start REPL:" }, function(choice)
+          if choice == "R" then
+            require("r.run").start_R("R")
+          elseif choice == "Python" then
+            iron.repl_for("python")
+          end
+        end)
+      end, { desc = "Start R or Python REPL" })
     end,
   },
 }

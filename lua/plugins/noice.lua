@@ -10,5 +10,11 @@ return {
         size = { width = 40, height = 1 },
       },
     },
+    routes = {
+      {
+        filter = { event = "lsp", kind = "progress", find = "pyright" },
+        opts = { skip = true },
+      },
+    },
   },
 }

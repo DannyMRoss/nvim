@@ -6,6 +6,9 @@ return {
       -- You can further customize individual keys here if needed
       ---  ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
     },
+    cmdline = {
+      enabled = false,
+    },
     completion = {
       menu = {
         auto_show = false,

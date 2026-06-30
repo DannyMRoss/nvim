@@ -3,6 +3,7 @@ return {
   "folke/snacks.nvim",
   ---@type snacks.Config
   opts = {
+    indent = { enabled = false },
     dashboard = {
       width = 110,
       preset = {

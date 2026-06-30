@@ -4,7 +4,7 @@ return {
   ---@type snacks.Config
   opts = {
     dashboard = {
-      width = 100,
+      width = 110,
       preset = {
         ---@type fun(cmd:string, opts:table)|nil
         pick = nil,
@@ -73,7 +73,8 @@ return {
           pane = 1,
           height = 20,
           padding = { 2, 2 },
-          indent = 10,
+          indent = 0,
+          ttl = 0,
         },
       },
     },

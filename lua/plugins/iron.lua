@@ -89,7 +89,7 @@ return {
         end
         vim.ui.select({ "R", "Python" }, { prompt = "Start REPL:" }, function(choice)
           if choice == "R" then
-            require("r.run").start_R("R")
+            iron.repl_for("r")
           elseif choice == "Python" then
             iron.repl_for("python")
           end

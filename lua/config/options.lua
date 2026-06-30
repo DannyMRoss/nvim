@@ -5,3 +5,4 @@ vim.g.autoformat = false
 vim.opt.relativenumber = false
 vim.opt.cursorline = false
 vim.opt.wrap = true
+vim.opt.listchars:remove("trail") -- don't show a dash over trailing whitespace

@@ -54,15 +54,6 @@ return {
             Snacks.gitbrowse()
           end,
         },
-        {
-          section = "terminal",
-          cmd = "neofetch",
-          pane = 1,
-          height = 20,
-          padding = { 2, 2 },
-          indent = 0,
-          ttl = 0,
-        },
       },
     },
   },
